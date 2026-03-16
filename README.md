@@ -3,12 +3,15 @@
 
 Automatically enables/disables Peplink Wi-Fi AP based on GPS speed.
 
+- Enables Wi-Fi when speed stays below `STOP_THRESHOLD` for `STOP_SAMPLES` checks.
+- Disables Wi-Fi when speed stays at/above `MOVE_THRESHOLD` for `MOVE_SAMPLES` checks.
+
 ---
 
 # There are 4 ways to run this:
 
 
-## Option 1. Use the Ready-Made Image from Docker Hub (No Build)
+## Option 1. Use the [Ready-Made Image from Docker Hub](https://hub.docker.com/r/audxiusgithub/peplinkwifitogglev2) (No Build)
 
 Just run this command (replace username/password):
 
