@@ -4,7 +4,9 @@
 Automatically enables/disables Peplink Wi-Fi AP based on GPS speed.
 
 ---
-# There are 3 ways to run this:
+
+# There are 4 ways to run this:
+
 
 ## Option 1. Use the Ready-Made Image from Docker Hub (No Build)
 
@@ -43,10 +45,34 @@ docker logs -f peplinkgps
 
 ---
 
-## Option 2. Build Your Own Image Locally (No Docker Hub)
+
+## Option 2. Download a Prebuilt Image for Your Architecture (No Build, No Docker Hub)
+
+If you don't want to build or use Docker Hub, just download a prebuilt image for your platform from the [GitHub Releases](https://github.com/Audxius/Peplink-Wifi-Toggle-V2/releases/tag/Release) page. Download the `.tar` file for your architecture, then load it with:
+```bash
+docker load -i peplinkwifitogglev2-amd64-local.tar
+```
+Replace `amd64` with `arm64`, or `armv7` if needed.
+
+Run it (replace `amd64` tag if you loaded for `arm64` or `armv7`):
+```bash
+docker run -d \
+	--name peplinkgps \
+	-e USERNAME=USERNAME \
+	-e PASSWORD=PASSWORD \
+	peplinkwifitogglev2:amd64-local
+```
+
+View logs:
+```bash
+docker logs -f peplinkgps
+```
+
+---
+
+## Option 3. Build Your Own Image Locally (No Docker Hub)
 
 ### How to check your architecture
-
 
 ```bash
 uname -m
@@ -55,8 +81,7 @@ uname -m
 - `aarch64` or `arm64` → arm64
 - `armv7l` → armv7
 
-
-Pick the matching build command below: 
+Pick the matching build command below:
 
 ### For most Intel/AMD PCs (amd64):
 ```bash
@@ -73,7 +98,7 @@ docker buildx build --platform linux/arm64 -t peplinkwifitogglev2:arm64-local --
 docker buildx build --platform linux/arm/v7 -t peplinkwifitogglev2:armv7-local --load .
 ```
 
-Run it (replace ```amd64``` tag if you built for arm64 or armv7):
+Run it (replace `amd64` tag if you built for arm64 or armv7):
 ```bash
 docker run -d \
 	--name peplinkgps \
@@ -87,18 +112,19 @@ View logs:
 docker logs -f peplinkgps
 ```
 
-To transfer to another PC (replace ```amd64``` tag if you built for arm64 or armv7):
+To transfer to another PC (replace `amd64` tag if you built for arm64 or armv7):
 ```bash
 docker image save peplinkwifitogglev2:amd64-local -o peplinkwifitogglev2-amd64-local.tar
 ```
-Copy the `.tar` file, then load it on the other PC (replace ```amd64``` tag if you built for arm64 or armv7):
+Copy the `.tar` file, then load it on the other PC (replace `amd64` tag if you built for arm64 or armv7):
 ```bash
 docker load -i peplinkwifitogglev2-amd64-local.tar
 ```
 
 ---
 
-## Option 3. Build and Host Your Own Image on Docker Hub
+
+## Option 4. Build and Host Your Own Image on Docker Hub
 
 Login to Docker Hub:
 
